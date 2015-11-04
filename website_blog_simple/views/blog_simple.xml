@@ -10,9 +10,7 @@
 
                     </div>
                     <div class="container mt16 md32">
-                        <t t-if="simple_blog_list">
-                            <h1 t-field="simple_blog_list[0].blog_id.name"/>
-                        </t>
+                        <h1 t-field="simple_blog.name"/>
                         <div class="oe_dark col-md-12 col-sm-12 col-xs-12">
                             <t t-foreach="simple_blog_list" t-as="b">
                                 <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
