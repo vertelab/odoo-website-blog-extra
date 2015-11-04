@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Blogs -->
+        <template id="simple_blog" name="Simple Blogs">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+
+                    </div>
+                    <div class="container mt16 md32">
+                        <t t-if="simple_blog_list">
+                            <h1 t-field="simple_blog_list[0].blog_id.name"/>
+                        </t>
+                        <div class="oe_dark col-md-12 col-sm-12 col-xs-12">
+                            <t t-foreach="simple_blog_list" t-as="b">
+                                <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
+                                    <div>
+                                        <h4 t-field="b.name"/>
+                                        <h5 t-field="b.subtitle"/>
+                                        <h6 t-field="b.write_date"/>
+                                    </div>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="oe_structure">
+
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Blog Post -->
+        <template id="simple_blog_posts" name="Simple Blog Post">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+
+                    </div>
+                    <section class="mt32 mb32">
+                        <div class="container">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="container oe_dark" style="padding: 15px;">
+                                        <h1 t-field="simple_blog_post.name" class="text-center"/>
+                                        <h3 t-field="simple_blog_post.subtitle" class="text-center"/>
+                                        <p t-field="simple_blog_post.content"/>
+                                        <div>
+                                            <h5 t-field="simple_blog_post.write_uid" class="pull-left"/>
+                                            <h5 t-field="simple_blog_post.write_date" class="pull-right"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_dark col-md-3 col-sm-3 col-xs-12">
+                                    <t t-foreach="simple_blog_list" t-as="b">
+                                        <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
+                                            <div class="mt16 md32">
+                                                <h4 t-field="b.name"/>
+                                                <h5 t-field="b.subtitle"/>
+                                                <h6 t-field="b.write_date"/>
+                                            </div>
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="oe_structure">
+
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</openerp>
