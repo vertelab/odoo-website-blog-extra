@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+from openerp import models, fields, api, _
 from openerp import http
 from openerp.http import request
 
@@ -34,3 +35,14 @@ class SimpleBlog(http.Controller):
         if simple_blog_post:
             return request.website.render("website_blog_simple.simple_blog_posts", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
         return request.website.render("website_blog_simple.simple_blog", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list})
+
+class website(models.Model):
+    _inherit = 'website'
+
+    def simple_blog_url(self, record, recipe):
+        """Returns a local url that points to the image field of a given browse record."""
+        if record.background_image:
+            return '/imagefield/%s/%s/%s/ref/%s' % (record._name, 'background_image', record.sudo().id, recipe)
+        elif record.author_avatar:
+            return '/imagefield/%s/%s/%s/ref/%s' % (record._name, 'author_avatar', record.sudo().id, recipe)
+        return '/imageurl/%s/ref/%s' % (os.path.join('web', 'static', 'src', 'img', 'placeholder.png'), recipe) # has bug

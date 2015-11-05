@@ -2,6 +2,13 @@
 <openerp>
     <data>
 
+        <template id="custom_js" inherit_id="website.assets_editor">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/website_blog/static/src/js/website_blog.editor.js"></script>
+            </xpath>
+        </template>
+
+
         <!-- Blogs -->
         <template id="simple_blog" name="Simple Blogs">
             <t t-call="website.layout">
@@ -10,14 +17,12 @@
 
                     </div>
                     <div class="container mt16 md32">
-                        <h1 t-field="simple_blog.name"/>
-                        <div class="oe_dark col-md-12 col-sm-12 col-xs-12">
+                        <h2 t-field="simple_blog.name"/>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <t t-foreach="simple_blog_list" t-as="b">
                                 <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
-                                    <div>
-                                        <h4 t-field="b.name"/>
-                                        <h5 t-field="b.subtitle"/>
-                                        <h6 t-field="b.write_date"/>
+                                    <div class="row oe_dark">
+                                        <h3 t-field="b.name"/><h6 t-field="b.write_date"/>
                                     </div>
                                 </a>
                             </t>
@@ -41,7 +46,20 @@
                         <div class="container">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <div class="container oe_dark" style="padding: 15px;">
+                                    <div class="container" style="padding: 15px;">
+
+                                        <img t-if="simple_blog_post.background_image" t-att-src="website.imagemagick_url(simple_blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
+<!--
+                                        <div class="btn-group css_non_editable_mode_hidden">
+                                            <a id="change_cover" class="btn btn-primary">
+                                                Change Cover
+                                            </a>
+                                            <a id="clear_cover" class="btn btn-danger">
+                                                <span class="fa fa-times"/>
+                                            </a>
+                                        </div>
+                                        <div class="cover-storage oe_hidden"></div>
+-->
                                         <h1 t-field="simple_blog_post.name" class="text-center"/>
                                         <h3 t-field="simple_blog_post.subtitle" class="text-center"/>
                                         <p t-field="simple_blog_post.content"/>
@@ -51,13 +69,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="oe_dark col-md-3 col-sm-3 col-xs-12">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
                                     <t t-foreach="simple_blog_list" t-as="b">
                                         <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
-                                            <div class="mt16 md32">
-                                                <h4 t-field="b.name"/>
-                                                <h5 t-field="b.subtitle"/>
-                                                <h6 t-field="b.write_date"/>
+                                            <div class="col-sm-12 oe_dark">
+                                                <div class="col-sm-6">
+                                                    <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')"/>
+<!--
+                                                    <span t-field="blog_post.author_id" style="display: inline-block;" t-field-options='{
+                                                        "widget": "contact",
+                                                        "fields": ["name"]
+                                                    }'/>
+-->
+                                                </div>
+                                                <div class="col-sm-6 mt16 md32">
+                                                    <h4 t-field="b.name"/>
+                                                    <h5 t-field="b.subtitle"/>
+                                                    <h6 t-field="b.write_date"/>
+                                                </div>
                                             </div>
                                         </a>
                                     </t>
