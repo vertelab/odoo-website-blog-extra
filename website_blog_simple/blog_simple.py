@@ -22,18 +22,21 @@
 from openerp import models, fields, api, _
 from openerp import http
 from openerp.http import request
+from openerp.addons.website_blog.controllers.main import WebsiteBlog
+import os
 
 class SimpleBlog(http.Controller):
 
     @http.route([
-                '/simple_blog/<model("blog.blog"):simple_blog>',
-                '/simple_blog/<model("blog.blog"):simple_blog>/post/<model("blog.post"):simple_blog_post>'
+                '/blog/<model("blog.blog"):simple_blog>',
+                '/blog/<model("blog.blog"):simple_blog>/post/<model("blog.post"):simple_blog_post>'
                 ],
                 type='http', auth="public", website=True)
     def view_simple_blogs(self, simple_blog=None, simple_blog_post=None, **post):
         simple_blog_list = request.env['blog.post'].sudo().search([('blog_id', '=', simple_blog.id)])
         if simple_blog_post:
-            return request.website.render("website_blog_simple.simple_blog_posts", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
+            # return request.website.render("website_blog_simple.simple_blog_posts", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
+            return request.website.render("website_blog.blog_post_complete", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
         return request.website.render("website_blog_simple.simple_blog", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list})
 
 class website(models.Model):
@@ -45,4 +48,5 @@ class website(models.Model):
             return '/imagefield/%s/%s/%s/ref/%s' % (record._name, 'background_image', record.sudo().id, recipe)
         elif record.author_avatar:
             return '/imagefield/%s/%s/%s/ref/%s' % (record._name, 'author_avatar', record.sudo().id, recipe)
-        return '/imageurl/%s/ref/%s' % (os.path.join('web', 'static', 'src', 'img', 'placeholder.png'), recipe) # has bug
+        return '/imageurl/%s/ref/%s' % (os.path.join('web', 'static', 'src', 'img', 'stock_person.png'), recipe) # has bug
+

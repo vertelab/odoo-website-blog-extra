@@ -29,13 +29,13 @@
 
         <record id="im_blog_single_param_one" model="image.recipe.param">
             <field name="name">width</field>
-            <field name="value">150</field>
+            <field name="value">850</field>
             <field name="recipe_id" ref="im_blog_single"/>
         </record>
 
         <record id="im_blog_single_param_two" model="image.recipe.param">
             <field name="name">height</field>
-            <field name="value">150</field>
+            <field name="value">850</field>
             <field name="recipe_id" ref="im_blog_single"/>
         </record>
     <!-- end of blog single view -->

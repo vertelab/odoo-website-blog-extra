@@ -2,12 +2,23 @@
 <openerp>
     <data>
 
-        <template id="custom_js" inherit_id="website.assets_editor">
-            <xpath expr="//script[last()]" position="after">
+        <template id="assets_editor_custom_js" inherit_id="website.assets_editor" name="Blog Editor" groups="base.group_website_publisher">
+            <xpath expr="." position="inside">
                 <script type="text/javascript" src="/website_blog/static/src/js/website_blog.editor.js"></script>
+                <script type="text/javascript" src="/website_blog/static/src/js/website.tour.blog.js"></script>
             </xpath>
         </template>
 
+        <template id="assets_editor_custom_css" inherit_id="website.layout">
+            <xpath expr="//head" position="inside">
+                <style>
+                    #title {
+                        min-height: 200px !important;
+                        max-height: 400px !important;
+                    }
+                </style>
+            </xpath>
+        </template>
 
         <!-- Blogs -->
         <template id="simple_blog" name="Simple Blogs">
@@ -16,7 +27,7 @@
                     <div class="oe_structure">
 
                     </div>
-                    <div class="container mt16 md32">
+                    <div class="container blog_post mt16 md32">
                         <h2 t-field="simple_blog.name"/>
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <t t-foreach="simple_blog_list" t-as="b">
@@ -36,45 +47,49 @@
         </template>
 
         <!-- Blog Post -->
-        <template id="simple_blog_posts" name="Simple Blog Post">
+        <template id="xsimple_blog_posts" name="Simple Blog Post">
             <t t-call="website.layout">
                 <div id="wrap">
-                    <div class="oe_structure">
 
-                    </div>
-                    <section class="mt32 mb32">
-                        <div class="container">
+                    <div class="mt32 mb32">
+                        <div class="container blog_post" style="padding: 0px;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <div class="container" style="padding: 15px;">
 
-                                        <img t-if="simple_blog_post.background_image" t-att-src="website.imagemagick_url(simple_blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
-<!--
-                                        <div class="btn-group css_non_editable_mode_hidden">
-                                            <a id="change_cover" class="btn btn-primary">
-                                                Change Cover
-                                            </a>
-                                            <a id="clear_cover" class="btn btn-danger">
-                                                <span class="fa fa-times"/>
-                                            </a>
-                                        </div>
-                                        <div class="cover-storage oe_hidden"></div>
--->
+                                <!-- blog post body -->
+                                <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 5px;">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
+                                    <div class="oe_structure oe_empty">
+
+                                    </div>
+                                    <div class="btn-group css_non_editable_mode_hidden">
+                                        <a id="change_cover" class="btn btn-primary">
+                                            Change Cover
+                                        </a>
+                                        <a id="clear_cover" class="btn btn-danger">
+                                            <span class="fa fa-times"/>
+                                        </a>
+                                    </div>
+                                    <div class="cover-storage oe_hidden"></div>
                                         <h1 t-field="simple_blog_post.name" class="text-center"/>
                                         <h3 t-field="simple_blog_post.subtitle" class="text-center"/>
+                                        <img t-if="simple_blog_post.background_image" t-att-src="website.imagemagick_url(simple_blog_post, 'background_image', 'website_blog_simple.im_blog_single')" style="width: 100%;"/>
                                         <p t-field="simple_blog_post.content"/>
                                         <div>
                                             <h5 t-field="simple_blog_post.write_uid" class="pull-left"/>
                                             <h5 t-field="simple_blog_post.write_date" class="pull-right"/>
                                         </div>
+                                        <div class="oe_structure oe_empty">
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                <!-- blog post list -->
+                                <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 5px;">
                                     <t t-foreach="simple_blog_list" t-as="b">
                                         <a t-att-href="'/simple_blog/%s/post/%s' % (simple_blog.id, b.id)">
-                                            <div class="col-sm-12 oe_dark">
-                                                <div class="col-sm-6">
-                                                    <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')"/>
+                                            <div class="col-sm-12 oe_dark mb16" style="padding: 0px;">
+                                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 5px;">
+                                                    <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
 <!--
                                                     <span t-field="blog_post.author_id" style="display: inline-block;" t-field-options='{
                                                         "widget": "contact",
@@ -82,7 +97,7 @@
                                                     }'/>
 -->
                                                 </div>
-                                                <div class="col-sm-6 mt16 md32">
+                                                <div class="col-md-9 col-sm-9 col-xs-9">
                                                     <h4 t-field="b.name"/>
                                                     <h5 t-field="b.subtitle"/>
                                                     <h6 t-field="b.write_date"/>
@@ -93,12 +108,99 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <div class="oe_structure">
-
                     </div>
                 </div>
             </t>
+        </template>
+
+        <!-- inherit blog_post_complete -->
+        <template id="blog_post_complete" inherit_id="website_blog.blog_post_complete" name="Blog Post">
+            <xpath expr="//div[@id='title']" position="replace">
+                <div class="mt32 mb32">
+                    <div class="container blog_post" style="padding: 0px;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+
+                            <!-- blog post body -->
+                            <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 5px;">
+                                <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
+                                    <t t-set="bg_url" t-value="website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
+                                    <div class="cover js_fullheight mt16" id="title" t-attf-style="background-image: url('bg_url')" style="">
+                                        <div class="container">
+                                          <div class="container text-right mt16">
+                                            <div class="btn-group css_non_editable_mode_hidden">
+                                                <a id="change_cover" class="btn btn-primary">
+                                                    Change Cover
+                                                </a>
+                                                <a id="clear_cover" class="btn btn-danger">
+                                                    <span class="fa fa-times"/>
+                                                </a>
+                                            </div>
+                                            <div class="cover-storage oe_hidden"></div>
+                                            <t t-call="website.publish_management">
+                                                <t t-set="object" t-value="blog_post"/>
+                                                <t t-set="publish_edit" t-value="True"/>
+                                                <li>
+                                                    <form class="duplicate hidden" action="/blogpost/duplicate">
+                                                        <input name="blog_post_id" t-att-value="blog_post.id"/>
+                                                    </form>
+                                                    <a href="#" class="duplicate" onclick="$(this).prev('form').submit()">Duplicate</a>
+                                                </li>
+                                            </t>
+                                          </div>
+                                        </div>
+                                        <div class="blog_title">
+                                            <h1 t-field="blog_post.name" id="blog_post_name" t-att-data-blog-id="blog_post.id"/>
+                                            <h2 t-field="blog_post.subtitle"/>
+                                            <p class="post-meta text-muted text-center" name="blog_post_data"/>
+<!--
+                                            <div>
+                                                <img itemprop="image" t-att-src="website.simple_blog_url(blog_post, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
+                                                <span t-field="blog_post.author_id" style="display: inline-block;" t-field-options='{
+                                                    "widget": "contact",
+                                                    "fields": ["name"]
+                                                }'/>
+                                            </div>
+-->
+                                        </div>
+                                    </div>
+                                    <div t-field="blog_post.content" class="mt32"/>
+                                    <div>
+                                        <h5 t-field="blog_post.write_uid" class="pull-left"/>
+                                        <h5 t-field="blog_post.write_date" class="pull-right"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- blog post list -->
+                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 5px;">
+                                <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
+                                <t t-foreach="blog_post_list" t-as="b">
+                                    <a t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
+                                        <div class="col-sm-12 oe_dark mb16" style="padding: 0px;">
+                                            <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 5px;">
+                                                <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
+                                            </div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <h4 t-field="b.name"/>
+                                                <h5 t-field="b.subtitle"/>
+                                                <h6 t-field="b.write_date"/>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='blog_content']" position="attributes">
+                <attribute name="class">hidden</attribute>
+            </xpath>
+
+            <xpath expr="//div[@class='cover cover_footer mb0 text-center']" position="attributes">
+                <attribute name="class">cover cover_footer mb0 text-center hidden</attribute>
+            </xpath>
         </template>
 
     </data>
