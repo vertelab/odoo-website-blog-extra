@@ -44,8 +44,8 @@ class website(models.Model):
 
     def simple_blog_url(self, record, recipe):
         """Returns a local url that points to the image field of a given browse record."""
-        if record.background_image and not str(record.background_image)[:4] == 'http':
-            return self.imagemagick_url(record, 'background_image', recipe)
+        if record.image:
+            return self.imagemagick_url(record, 'image', recipe)
         if record.author_avatar:
             return self.imagemagick_url(record, 'author_avatar', recipe)
         return '/imageurl/%s/ref/%s' % (os.path.join('web', 'static', 'src', 'img', 'stock_person.png'), recipe)
@@ -53,4 +53,4 @@ class website(models.Model):
 class BlogPost(models.Model):
     _inherit = "blog.post"
 
-    image = fields.Binary()
+    image = fields.Binary(string="Image")

@@ -5,8 +5,9 @@
         <template id="assets_editor_custom_css" inherit_id="website.layout">
             <xpath expr="//head" position="inside">
                 <style>
-                    #title {
-                        min-height: 300px !important;
+                    .blog_image img {
+                        width: 100%;
+                        margin: auto;
                         max-height: 500px !important;
                     }
                 </style>
@@ -24,8 +25,8 @@
                             <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 5px;">
                                 <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
                                     <div class="blog_title">
-                                        <h1 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
-                                        <h2 t-field="blog_post.subtitle"/>
+                                        <h2 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
+                                        <h4 t-field="blog_post.subtitle" class="text-center"/>
                                         <p class="post-meta text-muted text-center" name="blog_post_data"/>
                                         <div class="hidden">
                                             <img itemprop="image" t-att-src="website.simple_blog_url(blog_post, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
@@ -34,49 +35,39 @@
                                                 "fields": ["name"]
                                             }'/>
                                         </div>
+                                        <div class="container text-right">
+                                            <t t-call="website.publish_management">
+                                                <t t-set="object" t-value="blog_post"/>
+                                                <t t-set="publish_edit" t-value="True"/>
+                                                <li>
+                                                    <form class="duplicate hidden" action="/blogpost/duplicate">
+                                                        <input name="blog_post_id" t-att-value="blog_post.id"/>
+                                                    </form>
+                                                    <a href="#" class="duplicate" onclick="$(this).prev('form').submit()">Duplicate</a>
+                                                </li>
+                                            </t>
+                                        </div>
                                     </div>
 
 <!--
                                     <div id="title" t-if="blog_post.background_image and not str(blog_post.background_image)[:4] == 'http'" class="cover js_fullheight mt16" t-attf-style="background-image: url(website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single'))">
+                                    <t t-set="bg_url" t-value="website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
 -->
-                                    <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
-                                        <t t-set="bg_url" t-value="website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
-
-                                        <span itemprop="image" class="cke_widget_editable cke_widget_element oe_editable oe_dirty" contenteditable="true" t-field="blog_post.image" t-field-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name"}'/>
-
-<!--
-                                        <div class="container">
-                                              <div class="container text-right mt16">
-                                                <div class="btn-group css_non_editable_mode_hidden">
-                                                    <a id="change_cover" class="btn btn-primary">
-                                                        Change Cover
-                                                    </a>
-                                                    <a id="clear_cover" class="btn btn-danger">
-                                                        <span class="fa fa-times"/>
-                                                    </a>
-                                                </div>
-                                                <div class="cover-storage oe_hidden"></div>
-                                                <t t-call="website.publish_management">
-                                                    <t t-set="object" t-value="blog_post"/>
-                                                    <t t-set="publish_edit" t-value="True"/>
-                                                    <li>
-                                                        <form class="duplicate hidden" action="/blogpost/duplicate">
-                                                            <input name="blog_post_id" t-att-value="blog_post.id"/>
-                                                        </form>
-                                                        <a href="#" class="duplicate" onclick="$(this).prev('form').submit()">Duplicate</a>
-                                                    </li>
-                                                </t>
-                                            </div>
-                                        </div>
--->
+                                    <div class="blog_image col-md-12 col-sm-12 col-xs-12">
+                                        <t t-if="not blog_post.website_published">
+                                            <span itemprop="image" contenteditable="true" t-field="blog_post.image" t-field-options='{"widget": "image", "class": "img img-responsive", "alt-field": "name"}'/>
+                                        </t>
+                                        <t t-if="blog_post.image and blog_post.website_published">
+                                            <img itemprop="image" t-att-src="website.imagemagick_url(blog_post, 'image', 'website_blog_simple.im_blog_single')"/>
+                                        </t>
                                     </div>
                                     <div t-if="blog_post.background_image" id="blog_angle_down" class="hidden">
                                         <strong><a href="#blog_content" class="fa fa-angle-down fa-3x fa-inverse mt32"/></strong>
                                     </div>
                                     <div t-field="blog_post.content" class="mt32 col-md-12 col-sm-12 col-xs-12"/>
                                     <div>
-                                        <h5 t-field="blog_post.write_uid" class="pull-left"/>
-                                        <h5 t-field="blog_post.write_date" class="pull-right"/>
+                                        <h5 t-field="blog_post.write_uid" class="author pull-left"/>
+                                        <h5 t-field="blog_post.write_date" class="published_date pull-right"/>
                                     </div>
                                 </div>
                             </div>
@@ -91,9 +82,9 @@
                                                 <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: 10px auto auto; padding: 0px;"/>
                                             </div>
                                             <div class="col-md-9 col-sm-9 col-xs-9">
-                                                <h4 t-field="b.name"/>
-                                                <h5 t-field="b.subtitle"/>
-                                                <h6 t-field="b.write_date"/>
+                                                <h5 class="blog_list_title" t-field="b.name"/>
+                                                <h6 class="blog_list_subtitle" t-field="b.subtitle"/>
+                                                <h6 class="blog_list_date" t-field="b.write_date"/>
                                             </div>
                                         </div>
                                     </a>
