@@ -48,17 +48,12 @@
                                             </t>
                                         </div>
                                     </div>
-
-<!--
-                                    <div id="title" t-if="blog_post.background_image and not str(blog_post.background_image)[:4] == 'http'" class="cover js_fullheight mt16" t-attf-style="background-image: url(website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single'))">
-                                    <t t-set="bg_url" t-value="website.imagemagick_url(blog_post, 'background_image', 'website_blog_simple.im_blog_single')"/>
--->
                                     <div class="blog_image col-md-12 col-sm-12 col-xs-12">
                                         <t t-if="not blog_post.website_published">
                                             <span itemprop="image" contenteditable="true" t-field="blog_post.image" t-field-options='{"widget": "image", "class": "img img-responsive", "alt-field": "name"}'/>
                                         </t>
-                                        <t t-if="blog_post.image and blog_post.website_published">
-                                            <img itemprop="image" t-att-src="website.imagemagick_url(blog_post, 'image', 'website_blog_simple.im_blog_single')"/>
+                                        <t t-if="blog_post.website_published">
+                                            <img t-if="blog_post.image" itemprop="image" t-att-src="website.imagemagick_url(blog_post, 'image', 'website_blog_simple.im_blog_single')"/>
                                         </t>
                                     </div>
                                     <div t-if="blog_post.background_image" id="blog_angle_down" class="hidden">
@@ -110,6 +105,19 @@
                 <script type="text/javascript" src="/website_blog/static/src/js/website.tour.blog.js"></script>
             </xpath>
         </template>
+
+        <!-- add additional fields in blog post form view -->
+        <record id="view_blog_post_form" model="ir.ui.view">
+            <field name="name">blog.post.form</field>
+            <field name="model">blog.post</field>
+            <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+            <field name="arch" type="xml">
+                <field name="subtitle" position="after">
+                    <field name="image"/>
+                    <field name="website_published"/>
+                </field>
+            </field>
+        </record>
 
     </data>
 </openerp>
