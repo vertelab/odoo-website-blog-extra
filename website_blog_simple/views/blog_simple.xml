@@ -17,12 +17,12 @@
         <!-- inherit blog_post_complete -->
         <template id="blog_post_complete" inherit_id="website_blog.blog_post_complete" name="Blog Post">
             <xpath expr="//div[@id='title']" position="replace">
-                <div class="mt32 mb32">
-                    <div class="container blog_post" style="padding: 0px;">
+                <div class="mb32">
+                    <div class="container blog_post">
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <!-- blog post body -->
-                            <div class="col-md-9 col-sm-9 col-xs-12" style="">
+                            <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 15px 15px 0px 0px;">
                                 <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
                                     <div class="blog_title">
                                         <h2 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
@@ -68,7 +68,7 @@
                             </div>
 
                             <!-- blog post list -->
-                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 10px 5px 5px 5px;">
+                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 15px 0px 0px 0px;">
                                 <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
                                 <t t-foreach="blog_post_list" t-as="b">
                                     <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
