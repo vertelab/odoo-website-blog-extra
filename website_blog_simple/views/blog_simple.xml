@@ -74,7 +74,7 @@
                                     <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
                                         <div class="col-sm-12 oe_dark mb16" t-att-style="'%s' % 'border: 1px solid #f00; opacity: 0.5;' if b.website_published == False else 'padding: 0px;'">
                                             <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px;">
-                                                <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: 10px auto auto; padding: 0px;"/>
+                                                <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
                                             </div>
                                             <div class="col-md-9 col-sm-9 col-xs-9">
                                                 <h5 class="blog_list_title" t-field="b.name"/>
