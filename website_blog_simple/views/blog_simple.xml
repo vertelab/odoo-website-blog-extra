@@ -61,14 +61,14 @@
                                     </div>
                                     <div t-field="blog_post.content" class="mt32 col-md-12 col-sm-12 col-xs-12"/>
                                     <div>
-                                        <h5 t-field="blog_post.write_uid" class="author pull-left"/>
+                                        <h5 t-field="blog_post.author_id" class="author pull-left"/>
                                         <h5 t-field="blog_post.write_date" class="published_date pull-right"/>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- blog post list -->
-                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 5px;">
+                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 10px 5px 5px 5px;">
                                 <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
                                 <t t-foreach="blog_post_list" t-as="b">
                                     <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
