@@ -62,7 +62,7 @@
                                     <div t-field="blog_post.content" class="mt32 col-md-12 col-sm-12 col-xs-12"/>
                                     <div>
                                         <h5 t-field="blog_post.author_id" class="author pull-left"/>
-                                        <h5 t-field="blog_post.write_date" class="published_date pull-right"/>
+                                        <h5 t-field="blog_post.message_last_post" class="published_date pull-right"/>
                                     </div>
                                 </div>
                             </div>
@@ -70,19 +70,26 @@
                             <!-- blog post list -->
                             <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 15px 0px 0px 0px;">
                                 <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
+                                <t t-set="n" t-value="0"/>
                                 <t t-foreach="blog_post_list" t-as="b">
-                                    <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
-                                        <div class="col-sm-12 oe_dark mb16" t-att-style="'%s' % 'border: 1px solid #f00; opacity: 0.5;' if b.website_published == False else 'padding: 0px;'">
-                                            <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px;">
-                                                <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
+                                    <t t-if="n &lt; 10">
+                                        <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
+                                            <div class="col-sm-12 oe_dark mb16" t-att-style="'%s' % 'border: 1px solid #f00; opacity: 0.5;' if b.website_published == False else 'padding: 0px;'">
+                                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px;">
+                                                    <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
+                                                </div>
+                                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                                    <h5 class="blog_list_title" t-field="b.name"/>
+                                                    <h6 class="blog_list_subtitle" t-field="b.subtitle"/>
+                                                    <h6 class="blog_list_date" t-field="b.message_last_post"/>
+                                                </div>
                                             </div>
-                                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                                <h5 class="blog_list_title" t-field="b.name"/>
-                                                <h6 class="blog_list_subtitle" t-field="b.subtitle"/>
-                                                <h6 class="blog_list_date" t-field="b.write_date"/>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </t>
+                                    <t t-set="n" t-value="n+1"/>
+                                </t>
+                                <t t-call="website.pager">
+                                    <t t-set="classname">pull-right</t>
                                 </t>
                             </div>
                         </div>
