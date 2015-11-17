@@ -22,7 +22,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
 
                             <!-- blog post body -->
-                            <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 15px 15px 0px 0px;">
+                            <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 15px 15px 30px 0px;">
                                 <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
                                     <div class="blog_title">
                                         <h2 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
@@ -66,28 +66,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <ol class="breadcrumb" style="position: absolute; left: 15px; bottom: 0px; margin-bottom: 15px;">
+                                <li><a t-att-href="'/blog/%s' % blog_post.blog_id.id"><span t-esc="blog_post.blog_id.name"/></a></li>
+                                <t t-if="blog_post">
+                                    <li class="active"><span t-esc="blog_post.name"/></li>
+                                </t>
+                            </ol>
 
                             <!-- blog post list -->
-                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 15px 0px 0px 0px;">
+                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 15px 0px 15px 0px;">
                                 <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
-                                <t t-set="n" t-value="0"/>
-                                <t t-foreach="blog_post_list" t-as="b">
-                                    <t t-if="n &lt; 10">
-                                        <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
-                                            <div class="col-sm-12 oe_dark mb16" t-att-style="'%s' % 'border: 1px solid #f00; opacity: 0.5;' if b.website_published == False else 'padding: 0px;'">
-                                                <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px;">
-                                                    <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
-                                                </div>
-                                                <div class="col-md-9 col-sm-9 col-xs-9">
-                                                    <h5 class="blog_list_title" t-field="b.name"/>
-                                                    <h6 class="blog_list_subtitle" t-field="b.subtitle"/>
-                                                    <h6 class="blog_list_date" t-field="b.message_last_post"/>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </t>
-                                    <t t-set="n" t-value="n+1"/>
-                                </t>
+                                <div class="blog_list" style="overflow-y: auto; overflow-x: hidden; height: 100%; max-height: 800px;">
+                                    <div style="margin: 0px 5px 0px 0px;">
+                                        <ul style="list-style: none; margin: 0px;">
+                                            <t t-foreach="blog_post_list" t-as="b">
+                                                <li>
+                                                    <a t-if="b.website_published == True or user_id.has_group('base.group_website_publisher')" t-att-href="'/blog/%s/post/%s' % (blog.id, b.id)">
+                                                        <div class="col-sm-12 oe_dark mb16" t-att-style="'%s' % 'border: 1px solid #f00; opacity: 0.5;' if b.website_published == False else 'padding: 0px;'">
+                                                            <div class="col-md-4 col-sm-4 col-xs-4" style="padding: 10px;">
+                                                                <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
+                                                            </div>
+                                                            <div class="col-md-8 col-sm-8 col-xs-8" style="padding: 0px 5px 0px 5px;">
+                                                                <h5 class="blog_list_title"><t t-esc="b.name"/></h5>
+                                                                <h6 class="blog_list_subtitle"><t t-esc="b.subtitle"/></h6>
+                                                                <h6 class="blog_list_date"><t t-esc="b.message_last_post"/></h6>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <t t-call="website.pager">
                                     <t t-set="classname">pull-right</t>
                                 </t>
