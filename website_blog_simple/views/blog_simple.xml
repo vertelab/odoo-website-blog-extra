@@ -18,22 +18,18 @@
         <template id="blog_post_complete" inherit_id="website_blog.blog_post_complete" name="Blog Post">
             <xpath expr="//div[@id='title']" position="replace">
                 <div class="mb32">
-                    <div class="container blog_post">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-
+                    <div class="container blog_post" style="padding: 0px;">
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px;">
                             <!-- blog post body -->
-                            <div class="col-md-9 col-sm-9 col-xs-12" style="padding: 15px 15px 30px 0px;">
-                                <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
+                            <div class="col-md-9 col-sm-9 col-xs-12 hagdahl-outer">
+                                <div class="col-md-12 col-sm-12 col-xs-12 oe_dark hagdahl-inner">
                                     <div class="blog_title">
                                         <h2 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
                                         <h4 t-field="blog_post.subtitle" class="text-center"/>
                                         <p class="post-meta text-muted text-center" name="blog_post_data"/>
                                         <div class="hidden">
                                             <img itemprop="image" t-att-src="website.simple_blog_url(blog_post, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
-                                            <span t-field="blog_post.author_id" style="display: inline-block;" t-field-options='{
-                                                "widget": "contact",
-                                                "fields": ["name"]
-                                            }'/>
+                                            <span t-field="blog_post.author_id" style="display: inline-block;" t-field-options="{                                                 &quot;widget&quot;: &quot;contact&quot;,                                                 &quot;fields&quot;: [&quot;name&quot;]                                             }"/>
                                         </div>
                                         <div class="container text-right" style="position: absolute; right: 10px; top: 10px;">
                                             <t t-call="website.publish_management">
@@ -50,33 +46,47 @@
                                     </div>
                                     <div class="blog_image col-md-12 col-sm-12 col-xs-12">
                                         <t t-if="not blog_post.website_published">
-                                            <span itemprop="image" contenteditable="true" t-field="blog_post.image" t-field-options='{"widget": "image", "class": "img img-responsive", "alt-field": "name"}'/>
+                                            <span itemprop="image" contenteditable="true" t-field="blog_post.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img img-responsive&quot;, &quot;alt-field&quot;: &quot;name&quot;}"/>
                                         </t>
                                         <t t-if="blog_post.website_published">
                                             <img t-if="blog_post.image" itemprop="image" t-att-src="website.imagemagick_url(blog_post, 'image', 'website_blog_simple.im_blog_single')"/>
                                         </t>
                                     </div>
                                     <div t-if="blog_post.background_image" id="blog_angle_down" class="hidden">
-                                        <strong><a href="#blog_content" class="fa fa-angle-down fa-3x fa-inverse mt32"/></strong>
+                                        <strong>
+                                            <a href="#blog_content" class="fa fa-angle-down fa-3x fa-inverse mt32"/>
+                                        </strong>
                                     </div>
-                                    <div t-field="blog_post.content" class="mt32 col-md-12 col-sm-12 col-xs-12"/>
-                                    <div>
-                                        <h5 t-field="blog_post.author_id" class="author pull-left"/>
-                                        <h5 t-field="blog_post.message_last_post" class="published_date pull-right"/>
+                                    <div t-field="blog_post.content" class="col-md-12 col-sm-12 col-xs-12"/>
+                                    <div class="mt32 col-md-12 col-sm-12 col-xs-12">
+                                        <h2 class="text-center mb32" style="margin-top: 0px;">
+                                            <span t-field="blog_post.author_id" class="author pull-left" style="font-family: 'Sacramento', cursive;"/>
+                                            <hr class="pull-left" style="display: inline-block; width: 30%; margin-left: 3%; vertical-align: middle; border-color: #fa0;"/>
+                                        </h2>
+                                    </div>
+                                    <div class="mb64 col-md-12 col-sm-12 col-xs-12">
+                                        <h5 t-field="blog_post.message_last_post" class="published_date pull-left"/>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <ol class="breadcrumb pull-left" style="">
+                                            <li>
+                                                <a t-att-href="'/blog/%s' % blog_post.blog_id.id">
+                                                    <span t-esc="blog_post.blog_id.name"/>
+                                                </a>
+                                            </li>
+                                            <t t-if="blog_post">
+                                                <li class="active">
+                                                    <span t-esc="blog_post.name"/>
+                                                </li>
+                                            </t>
+                                        </ol>
                                     </div>
                                 </div>
                             </div>
-                            <ol class="breadcrumb" style="position: absolute; left: 15px; bottom: 0px; margin-bottom: 15px;">
-                                <li><a t-att-href="'/blog/%s' % blog_post.blog_id.id"><span t-esc="blog_post.blog_id.name"/></a></li>
-                                <t t-if="blog_post">
-                                    <li class="active"><span t-esc="blog_post.name"/></li>
-                                </t>
-                            </ol>
-
                             <!-- blog post list -->
-                            <div class="col-md-3 col-sm-3 col-xs-12" style="padding: 15px 0px 15px 0px;">
+                            <div class="col-md-3 col-sm-3 col-xs-12 hagdahl-outer">
                                 <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)])"/>
-                                <div class="blog_list" style="overflow-y: auto; overflow-x: hidden; height: 100%; max-height: 800px;">
+                                <div class="blog_list hagdahl-inner" style="overflow-y: auto; overflow-x: hidden; height: 100%; max-height: 800px;">
                                     <div style="margin: 0px 5px 0px 0px;">
                                         <ul style="list-style: none; margin: 0px;">
                                             <t t-foreach="blog_post_list" t-as="b">
@@ -87,9 +97,15 @@
                                                                 <img itemprop="image" t-att-src="website.simple_blog_url(b, 'website_blog_simple.im_blog_list')" style="margin: auto; padding: 0px;"/>
                                                             </div>
                                                             <div class="col-md-8 col-sm-8 col-xs-8" style="padding: 0px 5px 0px 5px;">
-                                                                <h5 class="blog_list_title"><t t-esc="b.name"/></h5>
-                                                                <h6 class="blog_list_subtitle"><t t-esc="b.subtitle"/></h6>
-                                                                <h6 class="blog_list_date"><t t-esc="b.message_last_post"/></h6>
+                                                                <h5 class="blog_list_title">
+                                                                    <t t-esc="b.name"/>
+                                                                </h5>
+                                                                <h6 class="blog_list_subtitle">
+                                                                    <t t-esc="b.subtitle"/>
+                                                                </h6>
+                                                                <h6 class="blog_list_date">
+                                                                    <t t-esc="b.message_last_post"/>
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -98,19 +114,14 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <t t-call="website.pager">
-                                    <t t-set="classname">pull-right</t>
-                                </t>
                             </div>
                         </div>
                     </div>
                 </div>
             </xpath>
-
             <xpath expr="//div[@id='blog_content']" position="attributes">
                 <attribute name="class">hidden</attribute>
             </xpath>
-
             <xpath expr="//div[@class='cover cover_footer mb0 text-center']" position="attributes">
                 <attribute name="class">cover cover_footer mb0 text-center hidden</attribute>
             </xpath>
