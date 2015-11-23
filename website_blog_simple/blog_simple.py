@@ -33,7 +33,7 @@ class SimpleBlog(http.Controller):
                 ],
                 type='http', auth="public", website=True)
     def view_simple_blogs(self, simple_blog=None, simple_blog_post=None, **post):
-        simple_blog_list = request.env['blog.post'].sudo().search([('blog_id', '=', simple_blog.id)])
+        simple_blog_list = request.env['blog.post'].sudo().search([('blog_id', '=', simple_blog.id), order='last_message_date desc'])
         if simple_blog_post:
             # return request.website.render("website_blog_simple.simple_blog_posts", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
             return request.website.render("website_blog.blog_post_complete", {'simple_blog': simple_blog, 'simple_blog_list': simple_blog_list, 'simple_blog_post': simple_blog_post})
