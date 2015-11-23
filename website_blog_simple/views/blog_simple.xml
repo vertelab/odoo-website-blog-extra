@@ -64,7 +64,7 @@
                                         </h2>
                                     </div>
                                     <div class="mb64 col-md-12 col-sm-12 col-xs-12">
-                                        <h5 t-field="blog_post.message_last_post" class="published_date pull-left"/>
+                                        <h5 t-field="blog_post.write_date" class="published_date pull-left"/>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <ol class="breadcrumb pull-left" style="">
@@ -84,7 +84,7 @@
                             </div>
                             <!-- blog post list -->
                             <div class="col-md-3 col-sm-3 col-xs-12 hagdahl-outer">
-                                <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)], order='message_last_post desc')"/>
+                                <t t-set="blog_post_list" t-value="request.env['blog.post'].sudo().search([('blog_id', '=', blog.id)], order='write_date desc')"/>
                                 <div class="blog_list hagdahl-inner" style="overflow-y: auto; overflow-x: hidden; height: 100%; max-height: 800px;">
                                     <div style="margin: 0px 5px 0px 0px;">
                                         <ul style="list-style: none; margin: 0px;">
@@ -103,7 +103,7 @@
                                                                     <t t-esc="b.subtitle"/>
                                                                 </h6>
                                                                 <h6 class="blog_list_date">
-                                                                    <t t-esc="b.message_last_post"/>
+                                                                    <t t-esc="b.write_date"/>
                                                                 </h6>
                                                             </div>
                                                         </div>
