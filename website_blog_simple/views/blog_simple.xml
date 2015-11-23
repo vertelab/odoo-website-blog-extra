@@ -17,12 +17,12 @@
         <!-- inherit blog_post_complete -->
         <template id="blog_post_complete" inherit_id="website_blog.blog_post_complete" name="Blog Post">
             <xpath expr="//div[@id='title']" position="replace">
-                <div class="mb32">
+                <div class="">
                     <div class="container blog_post" style="padding: 0px;">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px;">
                             <!-- blog post body -->
-                            <div class="col-md-9 col-sm-9 col-xs-12 hagdahl-outer">
-                                <div class="col-md-12 col-sm-12 col-xs-12 oe_dark hagdahl-inner">
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 oe_dark">
                                     <div class="blog_title">
                                         <h2 t-field="blog_post.name" id="blog_post_name" class="text-center" t-att-data-blog-id="blog_post.id"/>
                                         <h4 t-field="blog_post.subtitle" class="text-center"/>
@@ -61,7 +61,6 @@
                                     <div class="mt32 col-md-12 col-sm-12 col-xs-12">
                                         <h2 class="text-center mb32" style="margin-top: 0px;">
                                             <span t-field="blog_post.author_id" class="author pull-left" style="font-family: 'Sacramento', cursive;"/>
-                                            <hr class="pull-left" style="display: inline-block; width: 30%; margin-left: 3%; vertical-align: middle; border-color: #fa0;"/>
                                         </h2>
                                     </div>
                                     <div class="mb64 col-md-12 col-sm-12 col-xs-12">
