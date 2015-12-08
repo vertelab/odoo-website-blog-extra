@@ -30,7 +30,8 @@ Simple blog templates
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
     'depends': ['website_blog', 'website_imagemagick'],
-    'data': [ 'views/blog_simple.xml', 'blog_simple_data.xml'
+    'data': [ 'views/blog_simple.xml',
+    'blog_simple_data.xml',
     ],
     'installable': True,
 }
