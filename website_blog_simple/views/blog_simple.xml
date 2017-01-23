@@ -58,7 +58,7 @@
                                     <div t-field="blog_post.content" class="mt32 col-md-12 col-sm-12 col-xs-12"/>
                                     <div>
                                         <h2 style="font-family: 'Indie Flower';" t-field="blog_post.author_id" class="author"/>
-                                        <h5 t-field="blog_post.write_date" class="published_date"/>
+                                        <h5 t-field="blog_post.publish_date" class="published_date"/>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                                             <div class="col-md-7 col-md-offset-1 col-sm-7 col-xs-7" style="padding: 0px 5px 0px 5px;">
                                                                 <h5 class="blog_list_title"><t t-esc="b.name"/></h5>
                                                                 <t t-if="blog_list_subtitle"><h6 class="blog_list_subtitle"><t t-esc="b.subtitle"/></h6></t>
-                                                                <h6 class="blog_list_date"><t t-esc="b.write_date"/></h6>
+                                                                <h6 class="blog_list_date"><t t-esc="b.publish_date"/></h6>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -128,6 +128,16 @@
                 <field name="subtitle" position="after">
                     <field name="image"/>
                     <field name="website_published"/>
+                    <field name="publish_date"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_blog_post_list">
+            <field name="name">blog.post.list.inherit.simple_blog</field>
+            <field name="model">blog.post</field>
+            <field name="inherit_id" ref="website_blog.view_blog_post_list"/>
+            <field name="arch" type="xml">
+                <field name="write_date" position="after">
                     <field name="publish_date"/>
                 </field>
             </field>
