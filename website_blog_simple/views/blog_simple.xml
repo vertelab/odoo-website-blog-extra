@@ -128,6 +128,7 @@
                 <field name="subtitle" position="after">
                     <field name="image"/>
                     <field name="website_published"/>
+                    <field name="publish_date"/>
                 </field>
             </field>
         </record>

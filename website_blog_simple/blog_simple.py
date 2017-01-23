@@ -54,3 +54,4 @@ class BlogPost(models.Model):
     _inherit = "blog.post"
 
     image = fields.Binary(string="Image")
+    publish_date = fields.Date(string="Publish Date", default=fields.Date.today())
