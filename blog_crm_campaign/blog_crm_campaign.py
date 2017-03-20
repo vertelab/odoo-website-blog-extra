@@ -38,6 +38,7 @@ class object_crm_campaign(models.Model):
                 self.description = self.object_id.subtitle
                 try:
                     self.image = self.env['ir.attachment'].browse(int(re.search('ir.attachment/(.+?)_', self.object_id.background_image).group(1))).datas
+                    #~ self.image = self.env['ir.attachment'].search([('res_model', '=', self._name), ('res_id', '=', self.id)]).datas
                 except AttributeError:
                     self.image = None
         return super(object_crm_campaign, self).get_object_value()
