@@ -28,6 +28,7 @@ Simple blog templates
 =======================
 """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['website_blog', 'website_imagemagick'],
     'data': [ 'views/blog_simple.xml',
